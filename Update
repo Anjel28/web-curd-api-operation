@@ -1,0 +1,35 @@
+const [editingPost, setEditingPost] = useState(null);
+
+const updatePost = async () => {
+  try {
+    const response = await axios.put(
+      `https://jsonplaceholder.typicode.com/posts/${editingPost.id}`,
+      editingPost
+    );
+    setData(data.map(item => (item.id === editingPost.id ? response.data : item)));
+    setEditingPost(null);
+    alert('पोस्ट सफलतापूर्वक अपडेट की गई!');
+  } catch (error) {
+    console.error('पोस्ट अपडेट करने में त्रुटि:', error);
+  }
+};
+
+// एडिट फॉर्म JSX में
+{editingPost && (
+  <div>
+    <h2>पोस्ट संपादित करें</h2>
+    <input
+      type="text"
+      name="title"
+      value={editingPost.title}
+      onChange={(e) => setEditingPost({...editingPost, title: e.target.value})}
+    />
+    <textarea
+      name="body"
+      value={editingPost.body}
+      onChange={(e) => setEditingPost({...editingPost, body: e.target.value})}
+    />
+    <button onClick={updatePost}>अपडेट करें</button>
+    <button onClick={() => setEditingPost(null)}>कैंसल</button>
+  </div>
+)}

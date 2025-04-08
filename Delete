@@ -1,0 +1,12 @@
+const deletePost = async (id) => {
+  try {
+    await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+    setData(data.filter(item => item.id !== id));
+    alert('पोस्ट सफलतापूर्वक डिलीट की गई!');
+  } catch (error) {
+    console.error('पोस्ट डिलीट करने में त्रुटि:', error);
+  }
+};
+
+// डिलीट बटन JSX में
+<button onClick={() => deletePost(item.id)}>डिलीट करें</button>

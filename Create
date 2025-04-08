@@ -1,0 +1,35 @@
+const [newPost, setNewPost] = useState({ title: '', body: '' });
+
+const handleInputChange = (e) => {
+  setNewPost({ ...newPost, [e.target.name]: e.target.value });
+};
+
+const createPost = async () => {
+  try {
+    const response = await axios.post('https://jsonplaceholder.typicode.com/posts', newPost);
+    setData([...data, response.data]);
+    setNewPost({ title: '', body: '' });
+    alert('पोस्ट सफलतापूर्वक बनाई गई!');
+  } catch (error) {
+    console.error('पोस्ट क्रिएट करने में त्रुटि:', error);
+  }
+};
+
+// फॉर्म JSX में
+<div>
+  <h2>नई पोस्ट बनाएं</h2>
+  <input
+    type="text"
+    name="title"
+    value={newPost.title}
+    onChange={handleInputChange}
+    placeholder="शीर्षक"
+  />
+  <textarea
+    name="body"
+    value={newPost.body}
+    onChange={handleInputChange}
+    placeholder="विवरण"
+  />
+  <button onClick={createPost}>पोस्ट बनाएं</button>
+</div>
